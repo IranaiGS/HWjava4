@@ -1,14 +1,15 @@
 package ru.netology.javaqa;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import ru.netology.javaqa.RestService;
-public class RestServiceTest {
-    @Test
-    public void RestTest(int income, int expenses, int threshold) {
-        RestService service = new RestService();
-        int expected = 2;
-        int actual = service.calculate(income = 10_000, expenses = 3_000, threshold = 20_000);
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 
-        Assertions.assertEquals(expected, actual);
+public class RestServiceTest {
+    @ParameterizedTest
+    @CsvFileSource(files="src/test/resources/count.csv")
+    public void test(int expected, int income, int expenses,int threshold) {
+        RestService service = new RestService();
+        int count = service.calculate(income, expenses,threshold);
+         Assertions.assertEquals(expected,count);
     }
+
 }
